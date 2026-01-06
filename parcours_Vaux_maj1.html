@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Carte trajet vélo Vaux Allier</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+<style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #map { width: 100%; height: 100%; }
+    .marker-number {
+        background-color: #007bff;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border: 2px solid white;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // Initialisation de la carte
+    var map = L.map('map').setView([49.4, 2.1], 8);
+
+    // Fond de carte
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '© OpenStreetMap',
+        maxZoom: 18
+    }).addTo(map);
+
+    // Tableau des étapes [latitude, longitude, nom]
+    var etapes = [
+        [49.91053162783799, 5.614353026010077, "Jour 1 - Départ - Cobreville"],
+        [49.66239980509379, 5.048124203207995, "Jour 1 - Domaine de Douzi"]
+        
+    ];
+
+    // Ajout des marqueurs avec numéros commençant à 0
+    etapes.forEach(function(e, i) {
+        var icon = L.divIcon({
+            className: 'marker-number',
+            html: i, // commence à 0
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+
+        L.marker([e[0], e[1]], {icon: icon})
+            .addTo(map)
+            .bindPopup(e[2])
+            .bindTooltip(e[2].split(" - ")[e[2].split(" - ").length-1], {sticky: true});
+    });
+
+    // Tracé de la ligne bleue
+    var coords = etapes.map(function(e) { return [e[0], e[1]]; });
+    L.polyline(coords, { color: "blue", weight: 3 }).addTo(map);
+</script>
+</body>
+</html>
