@@ -66,10 +66,6 @@
             .bindTooltip(e[2].split(" - ")[e[2].split(" - ").length-1], {sticky: true});
     });
 
-// Tracé de la ligne bleue
-var coords = etapes.map(function(e) { return [e[0], e[1]]; });
-var polyline = L.polyline(coords, { color: "blue", weight: 3 }).addTo(map);
-    
 // Coordonnées de toutes les étapes
 var coords = etapes.map(function(e) { return [e[0], e[1]]; });
 
@@ -91,6 +87,7 @@ var focusLine = L.polyline(lastTwo);
 map.fitBounds(focusLine.getBounds(), {
     padding: [40, 40]
 });
+
 
 </script>
 </body>
