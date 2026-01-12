@@ -61,8 +61,13 @@
     });
 
     // Tracé de la ligne bleue
-    var coords = etapes.map(function(e) { return [e[0], e[1]]; });
-    L.polyline(coords, { color: "blue", weight: 3 }).addTo(map);
+var coords = etapes.map(function(e) { return [e[0], e[1]]; });
+var polyline = L.polyline(coords, { color: "blue", weight: 3 }).addTo(map);
+    
+    // 🔹 Centrage automatique sur le trajet
+    map.fitBounds(polyline.getBounds(), {
+        padding: [30, 30]
+    });
 </script>
 </body>
 </html>
