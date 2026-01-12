@@ -62,14 +62,28 @@
             .bindTooltip(e[2].split(" - ")[e[2].split(" - ").length-1], {sticky: true});
     });
 
-// Tracé de la ligne bleue
+// Coordonnées de toutes les étapes
 var coords = etapes.map(function(e) { return [e[0], e[1]]; });
-var polyline = L.polyline(coords, { color: "blue", weight: 3 }).addTo(map);
-    
-    // 🔹 Centrage automatique sur le trajet
-    map.fitBounds(polyline.getBounds(), {
-        padding: [30, 30]
-    });
+
+// Ligne complète du parcours (affichée)
+var fullLine = L.polyline(coords, {
+    color: "blue",
+    weight: 3
+}).addTo(map);
+
+// ---- Centrage sur les 2 dernières étapes ----
+
+// Récupération des 2 derniers points
+var lastTwo = coords.slice(-2);
+
+// Ligne invisible juste pour le centrage
+var focusLine = L.polyline(lastTwo);
+
+// Centrage automatique sur les 2 dernières étapes
+map.fitBounds(focusLine.getBounds(), {
+    padding: [40, 40]
+});
+
 </script>
 </body>
 </html>
